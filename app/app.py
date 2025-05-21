@@ -83,7 +83,7 @@ CATEGORIES = [
 # Azure Functions handlers
 def hello(req: func.HttpRequest) -> func.HttpResponse:
     return func.HttpResponse(
-        json.dumps({"message": "Hello from Azure Functions!"}),
+        json.dumps({"message": "Hello from Flask!"}),
         mimetype="application/json",
         status_code=200
     )

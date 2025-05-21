@@ -1,8 +1,8 @@
 import unittest
 import json
-from app.app import app, lambda_handler
+from app.app import app, hello, echo, health
 
-class TestLambdaAPI(unittest.TestCase):
+class TestAzureFunctions(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.app.testing = True
@@ -14,14 +14,11 @@ class TestLambdaAPI(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(data['message'], 'Hello from Flask!')
 
-        # Test through Lambda
-        event = {
-            'path': '/api/hello',
-            'httpMethod': 'GET'
-        }
-        response = lambda_handler(event, {})
-        self.assertEqual(response['statusCode'], 200)
-        data = json.loads(response['body'])
+        # Test through Azure Function
+        req = type('HttpRequest', (), {'get_json': lambda: None})()
+        response = hello(req)
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.get_body())
         self.assertEqual(data['message'], 'Hello from Flask!')
 
     def test_echo_endpoint(self):
@@ -33,15 +30,11 @@ class TestLambdaAPI(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(data, test_data)
 
-        # Test through Lambda
-        event = {
-            'path': '/api/echo',
-            'httpMethod': 'POST',
-            'body': json.dumps(test_data)
-        }
-        response = lambda_handler(event, {})
-        self.assertEqual(response['statusCode'], 200)
-        data = json.loads(response['body'])
+        # Test through Azure Function
+        req = type('HttpRequest', (), {'get_json': lambda: test_data})()
+        response = echo(req)
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.get_body())
         self.assertEqual(data, test_data)
 
     def test_health_endpoint(self):
@@ -51,14 +44,11 @@ class TestLambdaAPI(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(data['status'], 'healthy')
 
-        # Test through Lambda
-        event = {
-            'path': '/api/health',
-            'httpMethod': 'GET'
-        }
-        response = lambda_handler(event, {})
-        self.assertEqual(response['statusCode'], 200)
-        data = json.loads(response['body'])
+        # Test through Azure Function
+        req = type('HttpRequest', (), {'get_json': lambda: None})()
+        response = health(req)
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.get_body())
         self.assertEqual(data['status'], 'healthy')
 
 if __name__ == '__main__':
