@@ -5,6 +5,10 @@ import azure.functions as func
 
 app = Flask(__name__)
 
+# Register blueprints
+from app.api import api
+app.register_blueprint(api)
+
 # Sample data
 PRODUCTS = [
     {
@@ -143,20 +147,6 @@ def category(category_id):
 @app.route('/cart')
 def cart():
     return render_template('cart.html')
-
-# API Routes
-@app.route('/api/hello')
-def api_hello():
-    return jsonify({"message": "Hello from Flask!"})
-
-@app.route('/api/echo', methods=['POST'])
-def api_echo():
-    data = request.get_json()
-    return jsonify(data)
-
-@app.route('/api/health')
-def api_health():
-    return jsonify({"status": "healthy"})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
