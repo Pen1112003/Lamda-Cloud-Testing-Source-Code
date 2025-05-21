@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Shop Demo{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-light p-5 rounded-lg m-3">
+    <h1 class="display-4">Welcome to Shop Demo</h1>
+    <p class="lead">Discover amazing products at great prices.</p>
+    <hr class="my-4">
+    <p>Shop the latest trends and best deals.</p>
+    <a class="btn btn-primary btn-lg" href="/products" role="button">Shop Now</a>
+</div>
+
+<!-- Featured Products -->
+<h2 class="text-center my-4">Featured Products</h2>
+<div class="row">
+    {% for product in featured_products %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text"><strong>${{ product.price }}</strong></p>
+                <a href="/product/{{ product.id }}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Categories -->
+<h2 class="text-center my-4">Shop by Category</h2>
+<div class="row">
+    {% for category in categories %}
+    <div class="col-md-3 mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">{{ category.name }}</h5>
+                <a href="/category/{{ category.id }}" class="btn btn-outline-primary">Browse</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} 

@@ -1,0 +1,8 @@
+flask==2.0.1
+werkzeug==2.0.3
+azure-functions==1.15.0
+azure-functions-worker==1.0.0b9
+pytest==7.4.0
+pytest-cov==4.1.0
+python-dotenv==0.20.0
+requests==2.27.1 

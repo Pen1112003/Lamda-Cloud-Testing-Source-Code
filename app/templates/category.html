@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }} - Shop Demo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">{{ category.name }}</h1>
+
+    <!-- Category Banner -->
+    <div class="card mb-4">
+        <img src="{{ category.image }}" class="card-img" alt="{{ category.name }}" style="height: 200px; object-fit: cover;">
+        <div class="card-img-overlay d-flex align-items-center justify-content-center">
+            <h2 class="text-white text-center">{{ category.name }}</h2>
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text price">${{ product.price }}</p>
+                    <div class="d-grid gap-2">
+                        <a href="/product/{{ product.id }}" class="btn btn-primary">View Details</a>
+                        <button class="btn btn-outline-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

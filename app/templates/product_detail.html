@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - Shop Demo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/products">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-6">
+            <img src="{{ product.image }}" class="img-fluid rounded" alt="{{ product.name }}">
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <h1 class="mb-3">{{ product.name }}</h1>
+            <p class="lead">{{ product.description }}</p>
+            <h2 class="price mb-4">${{ product.price }}</h2>
+
+            <!-- Add to Cart Form -->
+            <form class="mb-4">
+                <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                        <label for="quantity" class="col-form-label">Quantity:</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" id="quantity" class="form-control" value="1" min="1">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Product Features -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Product Features</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-check-circle-fill text-success"></i> High Quality</li>
+                        <li><i class="bi bi-check-circle-fill text-success"></i> Fast Shipping</li>
+                        <li><i class="bi bi-check-circle-fill text-success"></i> 30-Day Return Policy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Share Buttons -->
+            <div class="mb-4">
+                <h5>Share this product:</h5>
+                <button class="btn btn-outline-primary me-2">Facebook</button>
+                <button class="btn btn-outline-info me-2">Twitter</button>
+                <button class="btn btn-outline-success">WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <div class="mt-5">
+        <h3>Related Products</h3>
+        <div class="row">
+            {% for related_product in related_products %}
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ related_product.image }}" class="card-img-top" alt="{{ related_product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ related_product.name }}</h5>
+                        <p class="card-text price">${{ related_product.price }}</p>
+                        <a href="/product/{{ related_product.id }}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

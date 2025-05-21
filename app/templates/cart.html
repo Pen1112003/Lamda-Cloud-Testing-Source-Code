@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - Shop Demo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Shopping Cart</h1>
+
+    {% if cart_items %}
+    <div class="row">
+        <!-- Cart Items -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    {% for item in cart_items %}
+                    <div class="row mb-4">
+                        <div class="col-md-2">
+                            <img src="{{ item.image }}" class="img-fluid rounded" alt="{{ item.name }}">
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <p class="card-text">{{ item.description }}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <button class="btn btn-outline-secondary" type="button">-</button>
+                                <input type="text" class="form-control text-center" value="{{ item.quantity }}">
+                                <button class="btn btn-outline-secondary" type="button">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <p class="price">${{ item.price }}</p>
+                            <button class="btn btn-danger btn-sm">Remove</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Order Summary</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal</span>
+                        <span>${{ subtotal }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping</span>
+                        <span>${{ shipping }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tax</span>
+                        <span>${{ tax }}</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <strong>Total</strong>
+                        <strong>${{ total }}</strong>
+                    </div>
+                    <button class="btn btn-primary w-100">Proceed to Checkout</button>
+                </div>
+            </div>
+
+            <!-- Promo Code -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Promo Code</h5>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Enter code">
+                        <button class="btn btn-outline-primary">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center">
+        <h3>Your cart is empty</h3>
+        <p>Add some products to your cart to see them here.</p>
+        <a href="/products" class="btn btn-primary">Continue Shopping</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 
