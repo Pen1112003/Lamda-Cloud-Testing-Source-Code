@@ -83,7 +83,7 @@ CATEGORIES = [
 # Azure Functions handlers
 def hello(req: func.HttpRequest) -> func.HttpResponse:
     return func.HttpResponse(
-        json.dumps({"message": "Hello from Flask!"}),
+        json.dumps({"message": "Hello from Azure Functions!"}),
         mimetype="application/json",
         status_code=200
     )
@@ -143,6 +143,20 @@ def category(category_id):
 @app.route('/cart')
 def cart():
     return render_template('cart.html')
+
+# API Routes
+@app.route('/api/hello')
+def api_hello():
+    return jsonify({"message": "Hello from Flask!"})
+
+@app.route('/api/echo', methods=['POST'])
+def api_echo():
+    data = request.get_json()
+    return jsonify(data)
+
+@app.route('/api/health')
+def api_health():
+    return jsonify({"status": "healthy"})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
