@@ -19,7 +19,7 @@ class TestAzureFunctions(unittest.TestCase):
         response = hello(req)
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.get_body())
-        self.assertEqual(data['message'], 'Hello from Flask!')
+        self.assertEqual(data['message'], 'Hello from Azure Functions!')
 
     def test_echo_endpoint(self):
         test_data = {'message': 'test message'}
@@ -31,7 +31,7 @@ class TestAzureFunctions(unittest.TestCase):
         self.assertEqual(data, test_data)
 
         # Test through Azure Function
-        req = type('HttpRequest', (), {'get_json': lambda: test_data})()
+        req = type('HttpRequest', (), {'get_json': lambda *args, **kwargs: test_data})()
         response = echo(req)
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.get_body())
