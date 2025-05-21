@@ -1,10 +1,8 @@
-name: Azure Functions Python
+name: Azure Functions Python (Disabled)
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  # Disable auto triggering
+  workflow_dispatch:
 
 env:
   AZURE_FUNCTIONAPP_NAME: 'lamda-cloud-testing'    # set this to your application's name

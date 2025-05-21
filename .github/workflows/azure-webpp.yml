@@ -1,10 +1,8 @@
-name: Azure Web App Deploy
+name: Azure Web App Deploy (Disabled)
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  # Disable auto triggering
+  workflow_dispatch:
 
 env:
   AZURE_WEBAPP_NAME: 'lamda-cloud-testing'    # set this to your web app name
