@@ -66,6 +66,13 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       
+      - name: 'Stop Web App before deployment'
+        shell: bash
+        run: |
+          az webapp stop --name lamda-cloud-testing --resource-group demo_resource
+          # Add a delay to ensure the app is fully stopped
+          sleep 30
+      
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
@@ -73,3 +80,8 @@ jobs:
           app-name: 'lamda-cloud-testing'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D907DA0223AC46698420CC4AE6A940C1 }}
+      
+      - name: 'Start Web App after deployment'
+        shell: bash
+        run: |
+          az webapp start --name lamda-cloud-testing --resource-group demo_resource

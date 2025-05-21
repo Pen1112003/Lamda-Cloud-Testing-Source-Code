@@ -1,1 +1,1 @@
-gunicorn --bind=0.0.0.0 --timeout 600 --chdir=/home/site/wwwroot app:app --log-level debug 
+gunicorn --bind=0.0.0.0 --timeout 600 app:app --log-level debug --error-logfile /home/LogFiles/gunicorn-error.log --access-logfile /home/LogFiles/gunicorn-access.log 
