@@ -12,8 +12,23 @@
 # below:
 .git
 .gitignore
-
-# Python pycache:
+.env
+.venv
+venv/
 __pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+tests/
+.github/
+ci/
+*.log
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
 # Ignored by the build system
 /setup.cfg

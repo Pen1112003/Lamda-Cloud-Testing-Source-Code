@@ -1,7 +1,6 @@
 import os
 import json
 from flask import Flask, jsonify, request, render_template
-import azure.functions as func
 
 app = Flask(__name__)
 
@@ -84,37 +83,7 @@ CATEGORIES = [
     }
 ]
 
-# Azure Functions handlers
-def hello(req: func.HttpRequest) -> func.HttpResponse:
-    return func.HttpResponse(
-        json.dumps({"message": "Hello from Azure Functions!"}),
-        mimetype="application/json",
-        status_code=200
-    )
-
-def echo(req: func.HttpRequest) -> func.HttpResponse:
-    try:
-        req_body = req.get_json()
-    except ValueError:
-        return func.HttpResponse(
-            "Invalid request body",
-            status_code=400
-        )
-    
-    return func.HttpResponse(
-        json.dumps(req_body),
-        mimetype="application/json",
-        status_code=200
-    )
-
-def health(req: func.HttpRequest) -> func.HttpResponse:
-    return func.HttpResponse(
-        json.dumps({"status": "healthy"}),
-        mimetype="application/json",
-        status_code=200
-    )
-
-# Flask routes for local development
+# Flask routes
 @app.route('/')
 def home():
     return render_template('home.html', 
@@ -148,6 +117,10 @@ def category(category_id):
 def cart():
     return render_template('cart.html')
 
+@app.route('/health')
+def health():
+    return jsonify({"status": "healthy"}), 200
+
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5001))
-    app.run(host='0.0.0.0', port=port, debug=True) 
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False) 
